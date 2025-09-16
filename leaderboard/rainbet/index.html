@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>BCdegens</title>
+    <title>HOMEYBETS</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
     <link
       rel="stylesheet"
@@ -344,7 +344,7 @@
                         class="gamble-aware-link">BeGambleAware.org</a>
                 </p>
             </div>
-            <p class="footer-text">&copy; 2025 BCdegens. All rights reserved.</p>
+            <p class="footer-text">&copy; 2025 HOMEYBETS. All rights reserved.</p>
         </div>
     </footer>
 
@@ -403,8 +403,8 @@
       async function fetchLeaderboardData() {
         try {
           const [leaderboardResponse, countdownResponse] = await Promise.all([
-            fetch('https://bcdegensdata.onrender.com/api/leaderboard/rainbet'),
-            fetch('https://bcdegensdata.onrender.com/api/countdown/rainbet')
+            fetch('https://HOMEYBETSdata.onrender.com/api/leaderboard/rainbet'),
+            fetch('https://HOMEYBETSdata.onrender.com/api/countdown/rainbet')
           ]);
           if (!leaderboardResponse.ok || !countdownResponse.ok) throw new Error('Network response was not ok');
           const leaderboardData = await leaderboardResponse.json();
@@ -480,7 +480,7 @@
 
         async function populatePreviousLeaderboard() {
           try {
-            const res = await fetch('https://bcdegensdata.onrender.com/api/prev-leaderboard/rainbet');
+            const res = await fetch('https://HOMEYBETSdata.onrender.com/api/prev-leaderboard/rainbet');
             if(!res.ok) throw new Error('Failed to fetch previous leaderboard');
             const data = await res.json();
             const leaderboard = data.leaderboard || [];
