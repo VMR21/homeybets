@@ -106,7 +106,7 @@ body {
   justify-content: center;
   overflow: hidden;
   background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7)),
-    url("");
+    url("https://i.ibb.co/qMJt55bm/image.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center; /* Add this line */
