@@ -1,374 +1,383 @@
 <!--
-  index.html
-  Reworked premium animated homepage (single-file).
-  License: CC0 1.0 Universal (Public Domain) — you may reuse, modify, publish.
-  If you prefer MIT or another license, replace this header with the desired license text.
+  index.html — Premium animated landing page
+  License: CC0 1.0 Universal (Public Domain) — reuse/modify freely.
+  Replace /assets/* with your images. Works offline (no external JS libs).
 -->
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>HOMEYBETS — Rewards & Live</title>
-  <meta name="description" content="HOMEYBETS — exclusive rewards, streams and leaderboards." />
-  <meta name="author" content="HOMEYBETS" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>HOMEYBETS — Live • Leaderboards • Rewards</title>
+<meta name="description" content="HOMEYBETS — premium streams, leaderboards and exclusive rewards." />
+<link rel="icon" href="/assets/logo.png">
 
-  <!-- Favicon (replace) -->
-  <link rel="icon" href="/assets/logo.png" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
 
-  <!-- Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Anton&display=swap" rel="stylesheet">
+<style>
+/* ---------- Variables ---------- */
+:root{
+  --bg:#04040a;
+  --glass: rgba(255,255,255,0.03);
+  --card: rgba(255,255,255,0.02);
+  --accent1: #00f0ff;
+  --accent2: #8a2be2;
+  --accent3: #ff5ca8;
+  --muted: #9aa3c7;
+  --radius:18px;
+  --maxw:1160px;
+  --glass-border: rgba(255,255,255,0.045);
+}
 
-  <style>
-    :root{
-      --bg-1: #060612;
-      --bg-2: #0d1228;
-      --card: rgba(255,255,255,0.04);
-      --glass: rgba(255,255,255,0.03);
-      --accent: #00f0ff;
-      --accent-2: #8a2be2;
-      --muted: #b9bfd0;
-      --glass-border: rgba(255,255,255,0.06);
-      --neon: 0 8px 40px rgba(0,240,255,0.08), 0 2px 10px rgba(138,43,226,0.06);
-      --radius: 14px;
-      --maxw: 1200px;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: radial-gradient(1200px 600px at 10% 10%, rgba(0,240,255,0.03), transparent 6%),
-                  radial-gradient(900px 400px at 90% 90%, rgba(138,43,226,0.03), transparent 6%),
-                  linear-gradient(180deg,var(--bg-1),var(--bg-2));
-      color:#fff;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      overflow-x:hidden;
-    }
+/* ---------- Reset ---------- */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+  background: linear-gradient(180deg,#03030a 0%, #070717 60%), radial-gradient(600px 300px at 10% 10%, rgba(0,240,255,0.03), transparent 8%), radial-gradient(900px 400px at 90% 90%, rgba(138,43,226,0.03), transparent 8%);
+  color:#eef0ff;
+  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+}
 
-    /* ---------- top nav ---------- */
-    header.site-header{
-      position:sticky; top:0; z-index:90;
-      backdrop-filter: blur(8px);
-      background: linear-gradient(180deg, rgba(6,6,18,0.35), rgba(6,6,18,0.18));
-      border-bottom: 1px solid rgba(255,255,255,0.03);
-    }
-    .nav{
-      max-width:var(--maxw); margin:0 auto; display:flex; align-items:center; gap:1rem; padding:0.6rem 1rem;
-      justify-content:space-between;
-    }
-    .brand{display:flex;align-items:center;gap:0.75rem;text-decoration:none;color:inherit}
-    .brand img{width:56px;height:56px;border-radius:10px;object-fit:cover;box-shadow: var(--neon)}
-    .brand span{font-family:Anton, Inter; font-weight:800; letter-spacing:2px; font-size:18px}
-    nav.links{display:flex;gap:0.5rem;align-items:center}
-    nav.links a{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:8px;font-weight:600;font-size:13px}
-    nav.links a:hover{color:#fff;background:rgba(255,255,255,0.03);transform:translateY(-2px)}
-    .nav-cta{display:flex;gap:0.5rem;align-items:center}
-    .btn{background:linear-gradient(90deg,var(--accent),var(--accent-2)); color:#001; padding:10px 14px;border-radius:10px;font-weight:700;text-decoration:none;box-shadow:var(--neon);border:none;cursor:pointer}
-    .ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:8px 12px;border-radius:10px;color:var(--muted)}
-    .hamb{display:none;background:transparent;border:0;color:var(--muted);font-size:18px}
+/* ---------- layout ---------- */
+.container{max-width:var(--maxw);margin:0 auto;padding:28px}
 
-    /* ---------- hero ---------- */
-    .hero{
-      max-width:var(--maxw); margin:28px auto 64px; padding:36px; position:relative; border-radius:var(--radius);
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border:1px solid var(--glass-border); box-shadow: 0 10px 40px rgba(2,6,23,0.6);
-      overflow:hidden; display:grid; grid-template-columns: 1fr 420px; gap:28px; align-items:center;
-    }
-    /* animated blob */
-    .blob{
-      position:absolute; right:-10%; top:-30%; width:720px; height:720px; filter:blur(70px); z-index:0;
-      background: radial-gradient(circle at 30% 30%, rgba(0,240,255,0.14), transparent 12%),
-                  radial-gradient(circle at 70% 70%, rgba(138,43,226,0.12), transparent 16%);
-      transform: rotate(5deg); opacity:0.95; animation:blob 12s ease-in-out infinite;
-    }
-    @keyframes blob{0%{transform:translateY(0) rotate(0)}50%{transform:translateY(-18px) rotate(4deg)}100%{transform:translateY(0) rotate(0)}}
+/* ---------- top bar ---------- */
+.header{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 4px;position:sticky;top:12px;z-index:80;
+  backdrop-filter: blur(8px);
+}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
+.logo{width:56px;height:56px;border-radius:12px;overflow:hidden;box-shadow:0 8px 40px rgba(0,240,255,0.06)}
+.brand h1{font-family:Orbitron,Inter;font-size:18px;letter-spacing:2px;margin:0}
+.nav{display:flex;gap:10px;align-items:center}
+.link{color:var(--muted);text-decoration:none;padding:8px 10px;border-radius:10px;font-weight:600;font-size:13px}
+.link:hover{color:white;background:linear-gradient(90deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01))}
+.cta{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#001;padding:10px 14px;border-radius:12px;font-weight:800;border:none;cursor:pointer;box-shadow:0 10px 40px rgba(0,240,255,0.06)}
+.hamb{display:none;background:transparent;border:0;color:var(--muted);font-size:20px}
 
-    .hero-left{position:relative; z-index:2;padding:12px}
-    .kicker{display:inline-block;background:linear-gradient(90deg,var(--accent),var(--accent-2));padding:6px 10px;border-radius:999px;color:#001;font-weight:800;font-size:12px;margin-bottom:18px}
-    h1{font-size:44px;line-height:1.02;margin:0 0 12px;letter-spacing:-0.5px}
-    p.lead{color:var(--muted);margin:0 0 18px;font-size:15px;max-width:640px}
-    .hero-actions{display:flex;gap:12px;align-items:center;margin-top:8px}
-    .big-cta{background:linear-gradient(90deg,#00f0ff,#8a2be2);padding:14px 18px;border-radius:12px;font-weight:800;color:#001;display:inline-flex;gap:10px;align-items:center}
-    .small-cta{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:12px 14px;border-radius:10px;color:var(--muted)}
+/* ---------- hero ---------- */
+.hero{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center;margin-top:18px;position:relative;padding:28px;border-radius:20px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.007));border:1px solid var(--glass-border);box-shadow:0 8px 40px rgba(2,6,23,0.6)}
+.particles-canvas{position:absolute;inset:0;z-index:0;pointer-events:none;border-radius:20px}
+.hero-left{position:relative;z-index:3;padding:8px}
+.kicker{display:inline-block;padding:6px 10px;border-radius:999px;background:linear-gradient(90deg,var(--accent1),var(--accent3));color:#001;font-weight:900;font-size:12px}
+.title{font-family:Orbitron,Inter;font-size:44px;margin:12px 0 10px;line-height:1.02}
+.title .neon{background:linear-gradient(90deg,var(--accent1),var(--accent2),var(--accent3));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--muted);max-width:52ch;margin:0 0 18px;font-size:15px}
 
-    /* hero-right - live stream mock */
-    .hero-right{z-index:2;display:flex;flex-direction:column;gap:14px;align-items:center}
-    .card-stream{width:100%;border-radius:12px;overflow:hidden;border:1px solid var(--glass-border);background:linear-gradient(180deg,rgba(0,0,0,0.55),rgba(0,0,0,0.45))}
-    .stream-embed{width:100%;height:260px;border:0;display:block}
-    .meta{display:flex;justify-content:space-between;align-items:center;padding:12px 14px}
-    .meta .live{display:inline-flex;gap:8px;align-items:center;background:rgba(255,0,60,0.12);padding:6px 10px;border-radius:999px;color:#ffb6c1;font-weight:700}
-    .meta .viewers{color:var(--muted);font-weight:700}
+/* animated stats row */
+.stats{display:flex;gap:10px;margin-top:14px}
+.stat{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:10px 14px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);min-width:120px}
+.stat strong{display:block;font-size:18px}
+.stat span{color:var(--muted);font-size:13px}
 
-    /* floating icons (parallax) */
-    .float-icons{position:absolute;left:6%;bottom:6%;display:flex;gap:10px;z-index:1;pointer-events:none}
-    .float-icons img{width:84px;height:84px;opacity:0.95;transform-origin:center;filter:drop-shadow(0 8px 30px rgba(0,0,0,0.55))}
+/* CTA cluster */
+.cta-row{display:flex;gap:12px;margin-top:16px;align-items:center}
+.btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:10px 12px;border-radius:12px;color:var(--muted);font-weight:700}
 
-    /* cards/grid sections */
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:18px}
-    .card{background:var(--card);border-radius:12px;padding:14px;border:1px solid rgba(255,255,255,0.03);backdrop-filter:blur(6px)}
-    .card h3{margin:0 0 8px;font-size:16px}
-    .card p{color:var(--muted);font-size:13px;margin:0}
+/* marquee of streamers */
+.marquee{margin-top:18px;padding:10px;border-radius:12px;background:linear-gradient(90deg,rgba(255,255,255,0.012),transparent);border:1px solid rgba(255,255,255,0.02);overflow:hidden}
+.marquee-track{display:flex;gap:22px;align-items:center;white-space:nowrap;will-change:transform;animation:marquee 18s linear infinite}
+.marquee-item{display:flex;gap:10px;align-items:center;padding:6px 12px;border-radius:999px;background:linear-gradient(90deg, rgba(0,240,255,0.03), rgba(138,43,226,0.02));border:1px solid rgba(255,255,255,0.02)}
+.marquee-item img{width:36px;height:36px;border-radius:10px;object-fit:cover}
 
-    /* socials strip */
-    .social-strip{max-width:var(--maxw);margin:24px auto;padding:0 20px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-    .social-card{min-width:220px;padding:14px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);text-align:center}
-    .social-card .name{font-weight:800;margin-top:8px}
-    .social-card .handle{color:var(--muted);font-weight:600;margin-top:6px}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
-    /* footer */
-    footer.site-footer{margin-top:40px;padding:28px 20px;border-top:1px solid rgba(255,255,255,0.03);text-align:center;color:var(--muted)}
+/* ---------- hero right - 3D card ---------- */
+.hero-right{z-index:3;display:flex;flex-direction:column;gap:14px;align-items:center;perspective:1100px}
+.player-card{width:420px;max-width:100%;height:320px;border-radius:16px;background:linear-gradient(180deg,rgba(8,8,20,0.7), rgba(0,0,0,0.35));border:1px solid rgba(255,255,255,0.04);overflow:hidden;box-shadow:0 30px 80px rgba(2,6,23,0.6);position:relative;transform-style:preserve-3d}
+.player-media{width:100%;height:210px;display:block;background-size:cover;background-position:center}
+.player-meta{display:flex;align-items:center;justify-content:space-between;padding:12px 14px}
+.live-pill{display:inline-flex;gap:8px;align-items:center;padding:8px 12px;border-radius:999px;background:linear-gradient(90deg,#ff6077,#ff8fb3);font-weight:800}
+.viewer-count{color:var(--muted);font-weight:700}
 
-    /* micro interactions */
-    a:hover, button:hover{transform:translateY(-2px);transition:transform 220ms ease, box-shadow 220ms ease}
-    .btn:active{transform:translateY(0)}
+/* glowing rings behind the card */
+.rings{position:absolute;left:50%;top:40%;transform:translate(-50%,-50%);width:520px;height:520px;pointer-events:none;filter:blur(36px);opacity:0.25}
+.rings svg{width:100%;height:100%}
 
-    /* cursor glow */
-    .cursor{
-      position:fixed;left:0;top:0;width:60px;height:60px;border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);mix-blend-mode:screen;z-index:9999;
-      background: radial-gradient(circle at 40% 30%, rgba(0,240,255,0.35), transparent 10%),
-                  radial-gradient(circle at 70% 70%, rgba(138,43,226,0.25), transparent 22%);
-      filter:blur(6px); opacity:0.85; transition:width .18s ease,height .18s ease, opacity .12s linear;
-    }
+/* lower controls */
+.player-controls{display:flex;gap:8px;padding:10px 14px;align-self:stretch;justify-content:center}
+.icon-btn{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03);padding:10px 12px;border-radius:12px;color:var(--muted);font-weight:700;cursor:pointer}
 
-    /* reveal animation */
-    .reveal{opacity:0; transform:translateY(18px); transition:all .6s cubic-bezier(.2,.9,.2,1); will-change:transform,opacity}
-    .reveal.show{opacity:1; transform:translateY(0)}
+/* ---------- features grid ---------- */
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:28px}
+.feature{padding:18px;border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border:1px solid rgba(255,255,255,0.03)}
+.feature h3{margin:0 0 8px}
+.feature p{margin:0;color:var(--muted)}
 
-    /* responsive */
-    @media (max-width:1080px){ .hero{grid-template-columns:1fr 360px} h1{font-size:36px} }
-    @media (max-width:840px){
-      nav.links{display:none} .hamb{display:block}
-      .hero{grid-template-columns:1fr; padding:24px}
-      .hero-right{order:-1}
-      .float-icons{left:2%; bottom:2%}
-      .brand img{width:48px;height:48px}
-    }
-    @media (max-width:420px){
-      h1{font-size:26px}
-      .stream-embed{height:190px}
-    }
+/* ---------- footer ---------- */
+.footer{margin-top:34px;padding:22px;border-top:1px solid rgba(255,255,255,0.03);text-align:center;color:var(--muted)}
 
-  </style>
+/* ---------- micro interactions ---------- */
+a,button{transition:all 220ms cubic-bezier(.2,.9,.2,1)}
+button:active{transform:translateY(1px)}
+.reveal{opacity:0;transform:translateY(18px);transition:all .6s cubic-bezier(.2,.9,.2,1)}
+.reveal.show{opacity:1;transform:translateY(0)}
+
+/* responsive */
+@media (max-width:980px){
+  .hero{grid-template-columns:1fr; padding:18px}
+  .hero-right{order:-1}
+  .features{grid-template-columns:repeat(2,1fr)}
+  .nav{display:none}
+  .hamb{display:block}
+}
+@media (max-width:520px){
+  .features{grid-template-columns:1fr}
+  .title{font-size:26px}
+  .player-card{height:260px}
+  .marquee-track{animation-duration:26s}
+}
+</style>
 </head>
+
 <body>
+<!-- PARTICLES CANVAS -->
+<canvas id="particles" class="particles-canvas" aria-hidden="true"></canvas>
 
-  <!-- custom cursor -->
-  <div id="cursor" class="cursor" aria-hidden="true"></div>
+<div class="container header" role="banner">
+  <a class="brand" href="/" aria-label="HOMEYBETS home">
+    <div class="logo" role="img" aria-hidden style="background:url('/assets/logo.png') center/cover"></div>
+    <h1>HOMEYBETS</h1>
+  </a>
 
-  <!-- header -->
-  <header class="site-header" role="banner">
-    <div class="nav">
-      <a class="brand" href="/" title="HOMEYBETS">
-        <img src="/assets/logo.png" alt="logo" />
-        <span>HOMEYBETS</span>
-      </a>
+  <nav class="nav" role="navigation" aria-label="Main">
+    <a class="link" href="#bonuses">Bonuses</a>
+    <a class="link" href="#stream">Stream</a>
+    <a class="link" href="#leader">Leaderboard</a>
+    <a class="link" href="#socials">Socials</a>
+    <button class="cta" onclick="location.href='https://rainbet.com/?r=HOMEY'">Claim</button>
+    <button class="hamb" aria-hidden="true">☰</button>
+  </nav>
+</div>
 
-      <nav class="links" role="navigation" aria-label="Main navigation">
-        <a href="#bonuses">Bonuses</a>
-        <a href="#stream">Stream</a>
-        <a href="#socials">Socials</a>
-        <a href="/leaderboard/rainbet"><span style="color:#ffd966">Leaderboard</span></a>
-      </nav>
+<main class="container" id="top">
+  <section class="hero" aria-labelledby="hero-title" role="region">
+    <div class="hero-left">
+      <div class="kicker">TOP PICK</div>
+      <h2 id="hero-title" class="title">Stream. Win. <span class="neon">Dominate.</span></h2>
+      <p class="lead">Premium streams, monthly leaderboards and instant rewards. Real drops, real winners — join the top room and claim your bonus with code <strong>HOMEY</strong>.</p>
 
-      <div class="nav-cta">
-        <a class="ghost" href="#contact">Contact</a>
-        <a class="btn" href="https://rainbet.com/?r=HOMEY" target="_blank" rel="noreferrer">Sign up — HOMEY</a>
-        <button class="hamb" id="hambBtn" aria-label="Open menu">☰</button>
+      <div class="stats">
+        <div class="stat reveal"><strong>2.4k</strong><span>Live viewers</span></div>
+        <div class="stat reveal"><strong>248</strong><span>Daily winners</span></div>
+        <div class="stat reveal"><strong>1.2M</strong><span>Total payouts</span></div>
+      </div>
+
+      <div class="cta-row">
+        <button class="cta reveal" onclick="location.href='https://rainbet.com/?r=HOMEY'">Claim Bonus</button>
+        <button class="btn-ghost reveal" onclick="document.getElementById('stream').scrollIntoView({behavior:'smooth'})">Watch Live</button>
+        <button class="btn-ghost reveal" onclick="copyReferral()">Copy Link</button>
+      </div>
+
+      <div class="marquee reveal" aria-hidden="false" style="margin-top:18px">
+        <div class="marquee-track" id="marquee-track">
+          <!-- duplicate items to create seamless scroll -->
+          <div style="display:flex;gap:22px">
+            <div class="marquee-item"><img src="/assets/s1.jpg" alt=""><div>streamer_one</div></div>
+            <div class="marquee-item"><img src="/assets/s2.jpg" alt=""><div>hot_stream</div></div>
+            <div class="marquee-item"><img src="/assets/s3.jpg" alt=""><div>pro_gamer</div></div>
+            <div class="marquee-item"><img src="/assets/s4.jpg" alt=""><div>night_show</div></div>
+            <div class="marquee-item"><img src="/assets/s5.jpg" alt=""><div>big_drop</div></div>
+            <div class="marquee-item"><img src="/assets/s6.jpg" alt=""><div>lucky_view</div></div>
+          </div>
+          <div style="display:flex;gap:22px">
+            <div class="marquee-item"><img src="/assets/s1.jpg" alt=""><div>streamer_one</div></div>
+            <div class="marquee-item"><img src="/assets/s2.jpg" alt=""><div>hot_stream</div></div>
+            <div class="marquee-item"><img src="/assets/s3.jpg" alt=""><div>pro_gamer</div></div>
+            <div class="marquee-item"><img src="/assets/s4.jpg" alt=""><div>night_show</div></div>
+            <div class="marquee-item"><img src="/assets/s5.jpg" alt=""><div>big_drop</div></div>
+            <div class="marquee-item"><img src="/assets/s6.jpg" alt=""><div>lucky_view</div></div>
+          </div>
+        </div>
       </div>
     </div>
-  </header>
 
-  <!-- hero -->
-  <main>
-    <section class="hero" aria-labelledby="hero-heading">
-      <div class="blob" aria-hidden="true"></div>
-
-      <div class="hero-left">
-        <div class="kicker">EXCLUSIVE</div>
-        <h1 id="hero-heading">Welcome to HOMEYBETS — rewards, streams & leaderboards</h1>
-        <p class="lead">Sign up with code <strong>HOMEY</strong> to claim instant bonuses. Watch live streams, climb leaderboards and join our community.</p>
-
-        <div class="hero-actions">
-          <a class="big-cta" href="https://rainbet.com/?r=HOMEY" target="_blank" rel="noreferrer">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M3 12h18" stroke="#001" stroke-width="2" stroke-linecap="round"/></svg>
-            Claim Bonus
-          </a>
-
-          <a class="small-cta" href="#stream">Watch Live</a>
-          <a class="small-cta" href="/leaderboard/rainbet">Leaderboard</a>
-        </div>
-
-        <div class="grid" style="margin-top:20px">
-          <div class="card reveal"><h3>Instant Rakeback</h3><p>Get real-time rakeback and perks when you sign up.</p></div>
-          <div class="card reveal"><h3>Weekly Prizes</h3><p>Top streamers get exclusive rewards and shoutouts.</p></div>
-          <div class="card reveal"><h3>Rank Up</h3><p>Special bonuses for high-rollers and loyal members.</p></div>
-        </div>
+    <div class="hero-right" aria-hidden="false">
+      <div class="rings" aria-hidden="true">
+        <svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+          <defs>
+            <radialGradient id="g1"><stop offset="0" stop-color="#00f0ff" stop-opacity="0.22"/><stop offset="1" stop-color="transparent"/></radialGradient>
+            <radialGradient id="g2"><stop offset="0" stop-color="#8a2be2" stop-opacity="0.16"/><stop offset="1" stop-color="transparent"/></radialGradient>
+          </defs>
+          <circle cx="300" cy="300" r="120" fill="url(#g1)"></circle>
+          <circle cx="300" cy="300" r="220" fill="url(#g2)"></circle>
+        </svg>
       </div>
 
-      <aside class="hero-right">
-        <div class="card-stream reveal" id="stream" aria-hidden="false" style="min-width:320px">
-          <!-- replace src with actual embed. using Kick player iframe pattern -->
-          <iframe class="stream-embed" src="https://player.kick.com/HOMEYBETS" title="HOMEYBETS live" allowfullscreen referrerpolicy="no-referrer"></iframe>
-          <div class="meta">
-            <div class="live"><span style="width:8px;height:8px;border-radius:50%;background:#ff4d4d;display:inline-block"></span> LIVE</div>
-            <div class="viewers">2.4k viewers</div>
+      <div class="player-card" id="playerCard" role="region" aria-label="Live player preview">
+        <div class="player-media" id="playerMedia" style="background-image:url('/assets/stream_preview.jpg')"></div>
+        <div class="player-meta">
+          <div style="display:flex;gap:10px;align-items:center">
+            <div style="width:44px;height:44px;border-radius:10px;background:url('/assets/host.jpg') center/cover"></div>
+            <div>
+              <div style="font-weight:800">HOMEYBETS Live</div>
+              <div style="color:var(--muted);font-size:13px">Streaming • Slots & Drops</div>
+            </div>
+          </div>
+          <div style="text-align:right">
+            <div class="live-pill"><span style="width:10px;height:10px;background:#fff;border-radius:50%;display:inline-block;margin-right:6px;box-shadow:0 6px 18px rgba(255,96,119,0.6)"></span>LIVE</div>
+            <div class="viewer-count" style="color:var(--muted);margin-top:6px">2.4k viewers</div>
           </div>
         </div>
 
-        <div class="card reveal">
-          <h3>Quick Actions</h3>
-          <p>Share the link, claim rewards, or view the leaderboard. Everything you need in one place.</p>
-          <div style="display:flex;gap:8px;margin-top:10px">
-            <button class="btn" onclick="copyReferral()">Copy Link</button>
-            <a class="ghost" href="#bonuses">View Bonuses</a>
-          </div>
+        <div class="player-controls" aria-hidden="true">
+          <button class="icon-btn" onclick="openStream()">Open Player</button>
+          <button class="icon-btn" onclick="toggleMute()">Mute</button>
+          <button class="icon-btn" onclick="share()">Share</button>
         </div>
-      </aside>
-
-      <div class="float-icons" aria-hidden="true">
-        <img src="/assets/hammer.png" style="transform:translateY(0) rotate(-6deg)" />
-        <img src="/assets/sword.png" style="transform:translateY(-6px) rotate(10deg)" />
-        <img src="/assets/chest.png" style="transform:translateY(3px) rotate(-4deg)" />
-      </div>
-    </section>
-
-    <!-- bonuses -->
-    <section id="bonuses" style="max-width:var(--maxw);margin:30px auto;padding:0 20px">
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
-        <div>
-          <h2 style="margin:0;font-size:20px">Bonus Offers</h2>
-          <p style="color:var(--muted);margin:6px 0 14px">Claim and receive rewards instantly when you sign-up with code HOMEY.</p>
-        </div>
-        <div style="color:var(--muted);font-weight:700">Open to new sign-ups</div>
-      </div>
-
-      <div class="grid" style="margin-top:12px">
-        <div class="card reveal">
-          <h3>Signup Bonus</h3>
-          <p>Immediate bonus credit on first deposit using link.</p>
-        </div>
-        <div class="card reveal">
-          <h3>Rankup Rewards</h3>
-          <p>Climb the monthly leaderboard to win big prizes.</p>
-        </div>
-        <div class="card reveal">
-          <h3>Referral Boost</h3>
-          <p>Share your link to earn additional perks per friend.</p>
-        </div>
-        <div class="card reveal">
-          <h3>Exclusive Drops</h3>
-          <p>Special items & events only for the community members.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- socials -->
-    <section id="socials" style="padding:18px 0 60px">
-      <div class="social-strip">
-        <a class="social-card" href="https://instagram.com/homeysbets" style="background:linear-gradient(45deg,#405DE6,#E1306C);">
-          <div aria-hidden style="font-size:28px">📸</div>
-          <div class="name">Instagram</div>
-          <div class="handle">@HOMEYBETS</div>
-        </a>
-
-        <a class="social-card" href="https://kick.com/homeybets" style="background:linear-gradient(45deg,#00c176,#007a50);">
-          <div aria-hidden style="font-size:28px">🎥</div>
-          <div class="name">Kick</div>
-          <div class="handle">@HOMEYBETS</div>
-        </a>
-
-        <a class="social-card" href="https://discord.gg/homeys" style="background:linear-gradient(45deg,#5865F2,#4752C4);">
-          <div aria-hidden style="font-size:28px">💬</div>
-          <div class="name">Discord</div>
-          <div class="handle">Join our community</div>
-        </a>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- footer -->
-  <footer class="site-footer">
-    <div style="max-width:var(--maxw);margin:0 auto;padding:0 20px">
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
-        <div style="color:var(--muted)">© <strong>HOMEYBETS</strong> — 2025. Please gamble responsibly.</div>
-        <div style="color:var(--muted)"><a class="ghost" href="https://www.begambleaware.org" target="_blank" rel="noreferrer">BeGambleAware.org</a></div>
       </div>
     </div>
+  </section>
+
+  <!-- features -->
+  <section class="features" id="bonuses" aria-labelledby="features-title">
+    <div class="feature reveal">
+      <h3>Instant Signup</h3>
+      <p>Quick sign-up bonus using our referral link — instant credit on first deposit.</p>
+    </div>
+    <div class="feature reveal">
+      <h3>Top Leaderboards</h3>
+      <p>Monthly payouts, weekly special events and exclusive drops for top players.</p>
+    </div>
+    <div class="feature reveal">
+      <h3>Secure Rewards</h3>
+      <p>Transparent payouts with history and audit-ready proof-of-wins for winners.</p>
+    </div>
+  </section>
+
+  <footer class="footer" id="socials">
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <a class="link" href="https://kick.com/homeybets">Kick</a>
+      <a class="link" href="https://instagram.com/homeybets">Instagram</a>
+      <a class="link" href="https://discord.gg/homeys">Discord</a>
+      <a class="link" href="https://rainbet.com/?r=HOMEY">Claim Bonus</a>
+    </div>
+    <div style="margin-top:12px;color:var(--muted)">© HOMEYBETS 2025 • Please gamble responsibly</div>
   </footer>
+</main>
 
-  <script>
-    // Basic helpers: smooth reveal on scroll, cursor glow, mobile menu, copy link
-    (function(){
-      // reveal on scroll
-      const reveals = document.querySelectorAll('.reveal');
-      const ro = new IntersectionObserver(entries => {
-        entries.forEach(e=>{
-          if(e.isIntersecting) e.target.classList.add('show');
-        });
-      }, {threshold: 0.12});
-      reveals.forEach(r=>ro.observe(r));
+<script>
+/* ==================
+   PARTICLES (lightweight)
+   ================== */
+(() => {
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  let w = canvas.width = innerWidth;
+  let h = canvas.height = innerHeight;
+  const num = Math.floor((w*h)/70000); // density
+  const particles = [];
 
-      // cursor follow
-      const cursor = document.getElementById('cursor');
-      document.addEventListener('mousemove', e=>{
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
-      });
-      // enlarge cursor on interactive targets
-      const interactives = document.querySelectorAll('button, a, .btn, .small-cta, .big-cta');
-      interactives.forEach(el=>{
-        el.addEventListener('mouseenter', ()=> {
-          cursor.style.width = '120px'; cursor.style.height = '120px'; cursor.style.opacity = '0.95';
-        });
-        el.addEventListener('mouseleave', ()=> {
-          cursor.style.width = '60px'; cursor.style.height = '60px'; cursor.style.opacity = '0.85';
-        });
-      });
+  function rand(min,max){ return Math.random()*(max-min)+min }
+  function resize(){ w = canvas.width = innerWidth; h = canvas.height = innerHeight; }
+  window.addEventListener('resize', resize);
 
-      // mobile menu
-      const hamb = document.getElementById('hambBtn');
-      hamb && hamb.addEventListener('click', ()=> {
-        // basic mobile sheet
-        const sheet = document.createElement('div');
-        sheet.style.position='fixed'; sheet.style.left=0; sheet.style.top=0; sheet.style.width='100%';
-        sheet.style.height='100%'; sheet.style.background='linear-gradient(180deg, rgba(2,6,23,0.95), rgba(2,6,23,0.98))';
-        sheet.style.zIndex='9999'; sheet.style.padding='40px 20px'; sheet.style.display='flex'; sheet.style.flexDirection='column'; sheet.style.gap='12px';
-        sheet.innerHTML = '<button style="align-self:flex-end;padding:8px 12px;border-radius:8px" id="closeSheet">Close</button>'
-                         + '<a href="#bonuses" style="margin-top:8px;font-size:20px;color:white">Bonuses</a>'
-                         + '<a href="#stream" style="font-size:20px;color:white">Stream</a>'
-                         + '<a href="#socials" style="font-size:20px;color:white">Socials</a>'
-                         + '<a href="/leaderboard/rainbet" style="font-size:20px;color:#ffd966">Leaderboard</a>';
-        document.body.appendChild(sheet);
-        document.getElementById('closeSheet').addEventListener('click', ()=> sheet.remove());
-      });
+  class P {
+    constructor(){
+      this.x = Math.random()*w;
+      this.y = Math.random()*h;
+      this.r = rand(0.6,2.2);
+      this.vx = rand(-0.2,0.6);
+      this.vy = rand(-0.1,0.6);
+      this.a = rand(0.03,0.12);
+      this.col = Math.random()<0.5 ? 'rgba(0,240,255,0.08)' : 'rgba(138,43,226,0.06)';
+    }
+    step(){
+      this.x += this.vx;
+      this.y += this.vy;
+      if(this.x > w+50) this.x = -50;
+      if(this.y > h+50) this.y = -50;
+    }
+    draw(){
+      ctx.beginPath();
+      ctx.fillStyle = this.col;
+      ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
+      ctx.fill();
+    }
+  }
 
-      // copy referral
-      window.copyReferral = function(){
-        navigator.clipboard?.writeText('https://rainbet.com/?r=HOMEY').then(()=>{
-          const b = document.createElement('div'); b.textContent='Referral copied!';
-          Object.assign(b.style,{position:'fixed',right:'18px',bottom:'18px',padding:'10px 14px',background:'rgba(0,0,0,0.6)',borderRadius:'8px'});
-          document.body.appendChild(b);
-          setTimeout(()=>b.remove(),1600);
-        });
-      };
+  function init(){
+    particles.length = 0;
+    for(let i=0;i<num;i++) particles.push(new P());
+  }
 
-      // small parallax for float icons
-      const floats = document.querySelectorAll('.float-icons img');
-      document.addEventListener('mousemove', e=>{
-        const cx = e.clientX; const cy = e.clientY;
-        floats.forEach((img,i)=>{
-          const speed = (i+1)*0.02;
-          const x = (cx - window.innerWidth/2)*speed;
-          const y = (cy - window.innerHeight/2)*speed;
-          img.style.transform = `translate(${x}px, ${y}px) rotate(${(x+y)%12}deg)`;
-        });
-      });
+  function frame(){
+    ctx.clearRect(0,0,w,h);
+    for(let p of particles){ p.step(); p.draw(); }
+    requestAnimationFrame(frame);
+  }
 
-    })();
-  </script>
+  init();
+  frame();
+})();
 
+/* ==================
+   REVEAL ON SCROLL
+   ================== */
+(() => {
+  const items = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting) { e.target.classList.add('show'); io.unobserve(e.target); }
+    });
+  }, {threshold:0.12});
+  items.forEach(i=>io.observe(i));
+})();
+
+/* ==================
+   3D TILT ON HERO CARD
+   ================== */
+(() => {
+  const card = document.getElementById('playerCard');
+  const media = document.getElementById('playerMedia');
+  if(!card) return;
+  card.addEventListener('pointermove', (e)=>{
+    const r = card.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width;
+    const py = (e.clientY - r.top) / r.height;
+    const rotY = (px - 0.5) * 14;
+    const rotX = (py - 0.5) * -10;
+    card.style.transform = `rotateY(${rotY}deg) rotateX(${rotX}deg) translateZ(0)`;
+    media.style.transform = `translateZ(20px) scale(1.02)`;
+  });
+  card.addEventListener('pointerleave', ()=> {
+    card.style.transform = `rotateY(0deg) rotateX(0deg)`;
+    media.style.transform = `translateZ(0) scale(1)`;
+  });
+})();
+
+/* ==================
+   MARQUEE PAUSE ON HOVER
+   ================== */
+(() => {
+  const track = document.getElementById('marquee-track');
+  track.addEventListener('mouseenter', ()=> track.style.animationPlayState='paused');
+  track.addEventListener('mouseleave', ()=> track.style.animationPlayState='running');
+})();
+
+/* ==================
+   SMALL HELPERS
+   ================== */
+function copyReferral(){
+  navigator.clipboard?.writeText('https://rainbet.com/?r=HOMEY').then(()=> {
+    const toast = document.createElement('div');
+    toast.textContent='Referral link copied!';
+    Object.assign(toast.style,{position:'fixed',right:'18px',bottom:'18px,padding':'10px 14px',background:'rgba(0,0,0,0.6)',color:'#fff',padding:'10px 14px',borderRadius:'10px',zIndex:9999});
+    document.body.appendChild(toast);
+    setTimeout(()=>toast.remove(),1600);
+  });
+}
+function openStream(){ window.open('https://player.kick.com/HOMEYBETS','_blank') }
+function toggleMute(){ alert('Mute toggled (demo)') }
+function share(){ navigator.share ? navigator.share({title:'HOMEYBETS',url:location.href}) : alert('Share not supported') }
+
+/* ==================
+   SMALL ACCESSIBILITY: skip to main if pressing S
+   ================== */
+window.addEventListener('keydown', (e)=> { if(e.key.toLowerCase()==='s'){ document.getElementById('top').scrollIntoView({behavior:'smooth'}) }});
+</script>
 </body>
 </html>
