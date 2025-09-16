@@ -1,306 +1,374 @@
-
-<!DOCTYPE html>
+<!--
+  index.html
+  Reworked premium animated homepage (single-file).
+  License: CC0 1.0 Universal (Public Domain) — you may reuse, modify, publish.
+  If you prefer MIT or another license, replace this header with the desired license text.
+-->
+<!doctype html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HOMEYBETS</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="icon" href="/assets/logo.png" type="image/png">
-    <link rel="stylesheet" href="/css/style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>HOMEYBETS — Rewards & Live</title>
+  <meta name="description" content="HOMEYBETS — exclusive rewards, streams and leaderboards." />
+  <meta name="author" content="HOMEYBETS" />
 
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Best Rainbet Rewards and Exclusive Bonuses!">
-    <meta name="keywords" content="HOMEYBETS, online gaming, casino, collaboration, entertainment, Rainbet">
-    <meta name="author" content="HOMEYBETS">
+  <!-- Favicon (replace) -->
+  <link rel="icon" href="/assets/logo.png" type="image/png">
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.bcdengs.com/">
-    <meta property="og:title" content="HOMEYBETS">
-    <meta property="og:description" content="Best Rainbet Rewards and Exclusive Bonuses!">
-    <meta property="og:image"
-        content="/assets/logo.png">
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Anton&display=swap" rel="stylesheet">
 
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://www.bcdengs.com/">
-    <meta property="twitter:title" content="HOMEYBETS">
-    <meta property="twitter:description" content="Best Rainbet Rewards and Exclusive Bonuses!">
-    <meta property="twitter:image"
-        content="/assets/logo.png">
-    <style>
-        @media (max-width: 768px) {
-            .hero-content {
-                display: flex;
-                flex-direction: column;
-            }
+  <style>
+    :root{
+      --bg-1: #060612;
+      --bg-2: #0d1228;
+      --card: rgba(255,255,255,0.04);
+      --glass: rgba(255,255,255,0.03);
+      --accent: #00f0ff;
+      --accent-2: #8a2be2;
+      --muted: #b9bfd0;
+      --glass-border: rgba(255,255,255,0.06);
+      --neon: 0 8px 40px rgba(0,240,255,0.08), 0 2px 10px rgba(138,43,226,0.06);
+      --radius: 14px;
+      --maxw: 1200px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(0,240,255,0.03), transparent 6%),
+                  radial-gradient(900px 400px at 90% 90%, rgba(138,43,226,0.03), transparent 6%),
+                  linear-gradient(180deg,var(--bg-1),var(--bg-2));
+      color:#fff;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      overflow-x:hidden;
+    }
 
-            .hero-content h1 {
-                order: 1;
-            }
+    /* ---------- top nav ---------- */
+    header.site-header{
+      position:sticky; top:0; z-index:90;
+      backdrop-filter: blur(8px);
+      background: linear-gradient(180deg, rgba(6,6,18,0.35), rgba(6,6,18,0.18));
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+    }
+    .nav{
+      max-width:var(--maxw); margin:0 auto; display:flex; align-items:center; gap:1rem; padding:0.6rem 1rem;
+      justify-content:space-between;
+    }
+    .brand{display:flex;align-items:center;gap:0.75rem;text-decoration:none;color:inherit}
+    .brand img{width:56px;height:56px;border-radius:10px;object-fit:cover;box-shadow: var(--neon)}
+    .brand span{font-family:Anton, Inter; font-weight:800; letter-spacing:2px; font-size:18px}
+    nav.links{display:flex;gap:0.5rem;align-items:center}
+    nav.links a{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:8px;font-weight:600;font-size:13px}
+    nav.links a:hover{color:#fff;background:rgba(255,255,255,0.03);transform:translateY(-2px)}
+    .nav-cta{display:flex;gap:0.5rem;align-items:center}
+    .btn{background:linear-gradient(90deg,var(--accent),var(--accent-2)); color:#001; padding:10px 14px;border-radius:10px;font-weight:700;text-decoration:none;box-shadow:var(--neon);border:none;cursor:pointer}
+    .ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:8px 12px;border-radius:10px;color:var(--muted)}
+    .hamb{display:none;background:transparent;border:0;color:var(--muted);font-size:18px}
 
-            .hero-buttons {
-                order: 2;
-                margin-bottom: 2rem;
-            }
+    /* ---------- hero ---------- */
+    .hero{
+      max-width:var(--maxw); margin:28px auto 64px; padding:36px; position:relative; border-radius:var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border:1px solid var(--glass-border); box-shadow: 0 10px 40px rgba(2,6,23,0.6);
+      overflow:hidden; display:grid; grid-template-columns: 1fr 420px; gap:28px; align-items:center;
+    }
+    /* animated blob */
+    .blob{
+      position:absolute; right:-10%; top:-30%; width:720px; height:720px; filter:blur(70px); z-index:0;
+      background: radial-gradient(circle at 30% 30%, rgba(0,240,255,0.14), transparent 12%),
+                  radial-gradient(circle at 70% 70%, rgba(138,43,226,0.12), transparent 16%);
+      transform: rotate(5deg); opacity:0.95; animation:blob 12s ease-in-out infinite;
+    }
+    @keyframes blob{0%{transform:translateY(0) rotate(0)}50%{transform:translateY(-18px) rotate(4deg)}100%{transform:translateY(0) rotate(0)}}
 
-            .hero-content p {
-                order: 3;
-            }
-        }
-    </style>
+    .hero-left{position:relative; z-index:2;padding:12px}
+    .kicker{display:inline-block;background:linear-gradient(90deg,var(--accent),var(--accent-2));padding:6px 10px;border-radius:999px;color:#001;font-weight:800;font-size:12px;margin-bottom:18px}
+    h1{font-size:44px;line-height:1.02;margin:0 0 12px;letter-spacing:-0.5px}
+    p.lead{color:var(--muted);margin:0 0 18px;font-size:15px;max-width:640px}
+    .hero-actions{display:flex;gap:12px;align-items:center;margin-top:8px}
+    .big-cta{background:linear-gradient(90deg,#00f0ff,#8a2be2);padding:14px 18px;border-radius:12px;font-weight:800;color:#001;display:inline-flex;gap:10px;align-items:center}
+    .small-cta{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:12px 14px;border-radius:10px;color:var(--muted)}
+
+    /* hero-right - live stream mock */
+    .hero-right{z-index:2;display:flex;flex-direction:column;gap:14px;align-items:center}
+    .card-stream{width:100%;border-radius:12px;overflow:hidden;border:1px solid var(--glass-border);background:linear-gradient(180deg,rgba(0,0,0,0.55),rgba(0,0,0,0.45))}
+    .stream-embed{width:100%;height:260px;border:0;display:block}
+    .meta{display:flex;justify-content:space-between;align-items:center;padding:12px 14px}
+    .meta .live{display:inline-flex;gap:8px;align-items:center;background:rgba(255,0,60,0.12);padding:6px 10px;border-radius:999px;color:#ffb6c1;font-weight:700}
+    .meta .viewers{color:var(--muted);font-weight:700}
+
+    /* floating icons (parallax) */
+    .float-icons{position:absolute;left:6%;bottom:6%;display:flex;gap:10px;z-index:1;pointer-events:none}
+    .float-icons img{width:84px;height:84px;opacity:0.95;transform-origin:center;filter:drop-shadow(0 8px 30px rgba(0,0,0,0.55))}
+
+    /* cards/grid sections */
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:18px}
+    .card{background:var(--card);border-radius:12px;padding:14px;border:1px solid rgba(255,255,255,0.03);backdrop-filter:blur(6px)}
+    .card h3{margin:0 0 8px;font-size:16px}
+    .card p{color:var(--muted);font-size:13px;margin:0}
+
+    /* socials strip */
+    .social-strip{max-width:var(--maxw);margin:24px auto;padding:0 20px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+    .social-card{min-width:220px;padding:14px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);text-align:center}
+    .social-card .name{font-weight:800;margin-top:8px}
+    .social-card .handle{color:var(--muted);font-weight:600;margin-top:6px}
+
+    /* footer */
+    footer.site-footer{margin-top:40px;padding:28px 20px;border-top:1px solid rgba(255,255,255,0.03);text-align:center;color:var(--muted)}
+
+    /* micro interactions */
+    a:hover, button:hover{transform:translateY(-2px);transition:transform 220ms ease, box-shadow 220ms ease}
+    .btn:active{transform:translateY(0)}
+
+    /* cursor glow */
+    .cursor{
+      position:fixed;left:0;top:0;width:60px;height:60px;border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);mix-blend-mode:screen;z-index:9999;
+      background: radial-gradient(circle at 40% 30%, rgba(0,240,255,0.35), transparent 10%),
+                  radial-gradient(circle at 70% 70%, rgba(138,43,226,0.25), transparent 22%);
+      filter:blur(6px); opacity:0.85; transition:width .18s ease,height .18s ease, opacity .12s linear;
+    }
+
+    /* reveal animation */
+    .reveal{opacity:0; transform:translateY(18px); transition:all .6s cubic-bezier(.2,.9,.2,1); will-change:transform,opacity}
+    .reveal.show{opacity:1; transform:translateY(0)}
+
+    /* responsive */
+    @media (max-width:1080px){ .hero{grid-template-columns:1fr 360px} h1{font-size:36px} }
+    @media (max-width:840px){
+      nav.links{display:none} .hamb{display:block}
+      .hero{grid-template-columns:1fr; padding:24px}
+      .hero-right{order:-1}
+      .float-icons{left:2%; bottom:2%}
+      .brand img{width:48px;height:48px}
+    }
+    @media (max-width:420px){
+      h1{font-size:26px}
+      .stream-embed{height:190px}
+    }
+
+  </style>
 </head>
-
 <body>
-    <header class="header">
-        <div class="nav-container">
-            <div class="nav-left">
-                <div style="display: flex; align-items: center; gap: 1rem;">
-                    <a href="/" class="logo">
-                        <img src="/assets/logo.png" alt="King Logo" style="width: 60px;">
-                    </a>
-                    
-                </div>
-                <div class="nav-links">
-                    <a href="/" class="nav-link">HOME</a>
-                    <a href="#socials" class="nav-link">SOCIALS</a>
-                    <a href="/leaderboard/rainbet" class="nav-link"><i class="fas fa-trophy" style="color: #d4af37"></i>
-                        LEADERBOARD</a>
-                </div>
-                <button class="mobile-menu-btn">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </div>
-        </div>
-    </header>
 
-    <div class="mobile-menu">
-        <button class="close-menu">
-            <i class="fas fa-times"></i>
-        </button>
-        <div class="nav-links">
-            <a href="/" class="nav-link" style="color: #2196f3">HOME</a>
-            <a href="#socials" class="nav-link">SOCIALS</a>
-            <a href="/leaderboard/rainbet" class="nav-link"><i class="fas fa-trophy" style="color: #d4af37"></i>
-                LEADERBOARD</a>
-        </div>
+  <!-- custom cursor -->
+  <div id="cursor" class="cursor" aria-hidden="true"></div>
+
+  <!-- header -->
+  <header class="site-header" role="banner">
+    <div class="nav">
+      <a class="brand" href="/" title="HOMEYBETS">
+        <img src="/assets/logo.png" alt="logo" />
+        <span>HOMEYBETS</span>
+      </a>
+
+      <nav class="links" role="navigation" aria-label="Main navigation">
+        <a href="#bonuses">Bonuses</a>
+        <a href="#stream">Stream</a>
+        <a href="#socials">Socials</a>
+        <a href="/leaderboard/rainbet"><span style="color:#ffd966">Leaderboard</span></a>
+      </nav>
+
+      <div class="nav-cta">
+        <a class="ghost" href="#contact">Contact</a>
+        <a class="btn" href="https://rainbet.com/?r=HOMEY" target="_blank" rel="noreferrer">Sign up — HOMEY</a>
+        <button class="hamb" id="hambBtn" aria-label="Open menu">☰</button>
+      </div>
     </div>
+  </header>
 
-    <section class="hero">
-        <div class="floating-images">
-            <img src="/assets/hammer.png" alt="floating icon 1" class="float-img float-1">
-            <img src="/assets/sword.png" alt="floating icon 2" class="float-img float-2">
-            <img src="/assets/wild.png" alt="floating icon 3" class="float-img float-3">
-            <img src="/assets/chest.png" alt="floating icon 4" class="float-img float-4">
+  <!-- hero -->
+  <main>
+    <section class="hero" aria-labelledby="hero-heading">
+      <div class="blob" aria-hidden="true"></div>
+
+      <div class="hero-left">
+        <div class="kicker">EXCLUSIVE</div>
+        <h1 id="hero-heading">Welcome to HOMEYBETS — rewards, streams & leaderboards</h1>
+        <p class="lead">Sign up with code <strong>HOMEY</strong> to claim instant bonuses. Watch live streams, climb leaderboards and join our community.</p>
+
+        <div class="hero-actions">
+          <a class="big-cta" href="https://rainbet.com/?r=HOMEY" target="_blank" rel="noreferrer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M3 12h18" stroke="#001" stroke-width="2" stroke-linecap="round"/></svg>
+            Claim Bonus
+          </a>
+
+          <a class="small-cta" href="#stream">Watch Live</a>
+          <a class="small-cta" href="/leaderboard/rainbet">Leaderboard</a>
         </div>
-        <div class="hero-content">
-            <h1>Welcome to HOMEYBETS Rewards!</h1>
-            <p>SIGN UP TO RAINBET USING CODE HOMEY AND GET THE BEST EXCLUSIVE REWARDS!</p>
-            <div class="hero-buttons">
-                <a href="https://rainbet.com/?r=HOMEY" target="_blank" class="hero-btn signup-btn">
-                    <img src="/assets/rainbet-signup.png" alt="Sign Up" style="width: 16px; height: 16px;">
-                    Sign Up
-                </a>
-                <a href="/leaderboard/rainbet" class="hero-btn leaderboard-btn">
-                    <i class="fas fa-trophy"></i>
-                    Leaderboard
-                </a>
-            </div>
+
+        <div class="grid" style="margin-top:20px">
+          <div class="card reveal"><h3>Instant Rakeback</h3><p>Get real-time rakeback and perks when you sign up.</p></div>
+          <div class="card reveal"><h3>Weekly Prizes</h3><p>Top streamers get exclusive rewards and shoutouts.</p></div>
+          <div class="card reveal"><h3>Rank Up</h3><p>Special bonuses for high-rollers and loyal members.</p></div>
         </div>
-        <div class="scroll-indicator">
-            <div class="mouse">
-                <div class="wheel"></div>
-            </div>
-            <div class="arrows">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+      </div>
+
+      <aside class="hero-right">
+        <div class="card-stream reveal" id="stream" aria-hidden="false" style="min-width:320px">
+          <!-- replace src with actual embed. using Kick player iframe pattern -->
+          <iframe class="stream-embed" src="https://player.kick.com/HOMEYBETS" title="HOMEYBETS live" allowfullscreen referrerpolicy="no-referrer"></iframe>
+          <div class="meta">
+            <div class="live"><span style="width:8px;height:8px;border-radius:50%;background:#ff4d4d;display:inline-block"></span> LIVE</div>
+            <div class="viewers">2.4k viewers</div>
+          </div>
         </div>
+
+        <div class="card reveal">
+          <h3>Quick Actions</h3>
+          <p>Share the link, claim rewards, or view the leaderboard. Everything you need in one place.</p>
+          <div style="display:flex;gap:8px;margin-top:10px">
+            <button class="btn" onclick="copyReferral()">Copy Link</button>
+            <a class="ghost" href="#bonuses">View Bonuses</a>
+          </div>
+        </div>
+      </aside>
+
+      <div class="float-icons" aria-hidden="true">
+        <img src="/assets/hammer.png" style="transform:translateY(0) rotate(-6deg)" />
+        <img src="/assets/sword.png" style="transform:translateY(-6px) rotate(10deg)" />
+        <img src="/assets/chest.png" style="transform:translateY(3px) rotate(-4deg)" />
+      </div>
     </section>
 
-    <!-- Add this after the bonus section and before social section -->
-    <section class="stream-section">
-        <div class="section-title">
-            <h2 class="bonus-title">Watch Our Streams</h2>
-            <p class="bonus-subtitle">CATCH ME LIVE ON KICK</p>
+    <!-- bonuses -->
+    <section id="bonuses" style="max-width:var(--maxw);margin:30px auto;padding:0 20px">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+        <div>
+          <h2 style="margin:0;font-size:20px">Bonus Offers</h2>
+          <p style="color:var(--muted);margin:6px 0 14px">Claim and receive rewards instantly when you sign-up with code HOMEY.</p>
         </div>
-        <div class="stream-container">
-            <iframe src="https://player.kick.com/HOMEYBETS" frameborder="0" allowfullscreen="true" scrolling="no"
-                class="stream-embed">
-            </iframe>
+        <div style="color:var(--muted);font-weight:700">Open to new sign-ups</div>
+      </div>
+
+      <div class="grid" style="margin-top:12px">
+        <div class="card reveal">
+          <h3>Signup Bonus</h3>
+          <p>Immediate bonus credit on first deposit using link.</p>
         </div>
+        <div class="card reveal">
+          <h3>Rankup Rewards</h3>
+          <p>Climb the monthly leaderboard to win big prizes.</p>
+        </div>
+        <div class="card reveal">
+          <h3>Referral Boost</h3>
+          <p>Share your link to earn additional perks per friend.</p>
+        </div>
+        <div class="card reveal">
+          <h3>Exclusive Drops</h3>
+          <p>Special items & events only for the community members.</p>
+        </div>
+      </div>
     </section>
 
-    <section class="bonus-section" id="bonuses">
-        <div class="section-title">
-            <h2 class="bonus-title">Bonus <span style="color: var(--primary-blue)">Offers</span></h2>
-            <p class="bonus-subtitle">CLAIM AND RECEIVE REWARDS INSTANTLY!</p>
-        </div>
-        <div class="bonus-grid">
-            <div class="bonus-card">
-                <img src="/assets/rainbet.png" alt="Platform Logo">
-                <ul class="bonus-features">
-                    <li class="bonus-feature">
-                        <i class="fas fa-check"></i>
-                        <span>INSTANT RAKEBACK</span>
-                    </li>
-                    <li class="bonus-feature">
-                        <i class="fas fa-check"></i>
-                        <span>RANKUP REWARDS</span>
-                    </li>
-                    <li class="bonus-feature">
-                        <i class="fas fa-check"></i>
-                        <span>WAGER LEADERBOARD</span>
-                    </li>
-                </ul>
-                <a href="https://rainbet.com/?r=HOMEY" target="_blank" class="claim-btn"
-                    style="text-decoration: none; color: white; text-align: center;">CLAIM BONUS</a>
-            </div>
-        </div>
+    <!-- socials -->
+    <section id="socials" style="padding:18px 0 60px">
+      <div class="social-strip">
+        <a class="social-card" href="https://instagram.com/homeysbets" style="background:linear-gradient(45deg,#405DE6,#E1306C);">
+          <div aria-hidden style="font-size:28px">📸</div>
+          <div class="name">Instagram</div>
+          <div class="handle">@HOMEYBETS</div>
+        </a>
+
+        <a class="social-card" href="https://kick.com/homeybets" style="background:linear-gradient(45deg,#00c176,#007a50);">
+          <div aria-hidden style="font-size:28px">🎥</div>
+          <div class="name">Kick</div>
+          <div class="handle">@HOMEYBETS</div>
+        </a>
+
+        <a class="social-card" href="https://discord.gg/homeys" style="background:linear-gradient(45deg,#5865F2,#4752C4);">
+          <div aria-hidden style="font-size:28px">💬</div>
+          <div class="name">Discord</div>
+          <div class="handle">Join our community</div>
+        </a>
+      </div>
     </section>
 
-    <section class="social-section" id="socials">
-        <div class="section-title">
-            <h2 class="bonus-title">Connect With Me</h2>
-            <p class="bonus-subtitle">JOIN OUR GROWING COMMUNITY</p>
-        </div>
-        <div class="social-grid">
-            <a href="https://instagram.com/homeysbets" class="social-card"
-                style="background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D);">
-                <i class="fab fa-instagram social-icon"></i>
-                <div class="social-name">Instagram</div>
-                <div class="social-handle">@HOMEYBETS</div>
-            </a>
-            <a href="https://kick.com/homeybets" class="social-card"
-                style="background: linear-gradient(145deg, #1a8f6c, #20B486);">
-                <i class="fa-brands fa-kickstarter-k social-icon"></i>
-                <div class="social-name">Kick</div>
-                <div class="social-handle">@HOMEYBETS</div>
-            </a>
-            <a href="https://discord.gg/homeys" class="social-card"
-                style="background: linear-gradient(145deg, #4752c4, #5865F2);">
-                <i class="fab fa-discord social-icon"></i>
-                <div class="social-name">Discord</div>
-                <div class="social-handle">Join our community!</div>
-            </a>
-        </div>
-    </section>
+  </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-top">
-                <div class="footer-links">
-                    <a href="/" class="footer-link">Home</a>
-                    <a href="#socials" class="footer-link">Socials</a>
-                    <a href="/leaderboard/rainbet" class="footer-link">Leaderboard</a>
-                </div>
-                <div class="footer-social">
-                    <a href="https://www.instagram.com/HOMEYBETS"><i class="fab fa-instagram"></i></a>
-                    <a href="https://kick.com/HOMEYBETS"><i class="fa-brands fa-kickstarter-k"></i></a>
-                    <a href="https://discord.gg/homeys"><i class="fab fa-discord"></i></a>
-                </div>
-            </div>
-            <div class="gamble-aware">
-                <p class="gamble-aware-text">
-                    Please gamble responsibly. Gambling can be addictive and may result in difficulties. For help and
-                    support, visit <a href="https://www.begambleaware.org" target="_blank" rel="noopener noreferrer"
-                        class="gamble-aware-link">BeGambleAware.org</a>
-                </p>
-            </div>
-            <p class="footer-text">&copy; 2025 HOMEYBETS All rights reserved.</p>
-        </div>
-    </footer>
+  <!-- footer -->
+  <footer class="site-footer">
+    <div style="max-width:var(--maxw);margin:0 auto;padding:0 20px">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+        <div style="color:var(--muted)">© <strong>HOMEYBETS</strong> — 2025. Please gamble responsibly.</div>
+        <div style="color:var(--muted)"><a class="ghost" href="https://www.begambleaware.org" target="_blank" rel="noreferrer">BeGambleAware.org</a></div>
+      </div>
+    </div>
+  </footer>
 
-    <script>
-        // Mobile menu functionality
-        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        const closeMenuBtn = document.querySelector('.close-menu');
-        const mobileMenu = document.querySelector('.mobile-menu');
-        const mobileMenuLinks = document.querySelectorAll('.mobile-menu .nav-link');
-
-        // Open mobile menu
-        mobileMenuBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            mobileMenu.classList.add('active');
-            document.body.style.overflow = 'hidden';
+  <script>
+    // Basic helpers: smooth reveal on scroll, cursor glow, mobile menu, copy link
+    (function(){
+      // reveal on scroll
+      const reveals = document.querySelectorAll('.reveal');
+      const ro = new IntersectionObserver(entries => {
+        entries.forEach(e=>{
+          if(e.isIntersecting) e.target.classList.add('show');
         });
+      }, {threshold: 0.12});
+      reveals.forEach(r=>ro.observe(r));
 
-        // Close mobile menu
-        closeMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.remove('active');
-            document.body.style.overflow = 'auto';
+      // cursor follow
+      const cursor = document.getElementById('cursor');
+      document.addEventListener('mousemove', e=>{
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+      });
+      // enlarge cursor on interactive targets
+      const interactives = document.querySelectorAll('button, a, .btn, .small-cta, .big-cta');
+      interactives.forEach(el=>{
+        el.addEventListener('mouseenter', ()=> {
+          cursor.style.width = '120px'; cursor.style.height = '120px'; cursor.style.opacity = '0.95';
         });
-
-        // Close menu when clicking a link
-        mobileMenuLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            });
+        el.addEventListener('mouseleave', ()=> {
+          cursor.style.width = '60px'; cursor.style.height = '60px'; cursor.style.opacity = '0.85';
         });
+      });
 
-        // Close menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (mobileMenu.classList.contains('active') &&
-                !mobileMenu.contains(e.target) &&
-                !mobileMenuBtn.contains(e.target)) {
-                mobileMenu.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            }
+      // mobile menu
+      const hamb = document.getElementById('hambBtn');
+      hamb && hamb.addEventListener('click', ()=> {
+        // basic mobile sheet
+        const sheet = document.createElement('div');
+        sheet.style.position='fixed'; sheet.style.left=0; sheet.style.top=0; sheet.style.width='100%';
+        sheet.style.height='100%'; sheet.style.background='linear-gradient(180deg, rgba(2,6,23,0.95), rgba(2,6,23,0.98))';
+        sheet.style.zIndex='9999'; sheet.style.padding='40px 20px'; sheet.style.display='flex'; sheet.style.flexDirection='column'; sheet.style.gap='12px';
+        sheet.innerHTML = '<button style="align-self:flex-end;padding:8px 12px;border-radius:8px" id="closeSheet">Close</button>'
+                         + '<a href="#bonuses" style="margin-top:8px;font-size:20px;color:white">Bonuses</a>'
+                         + '<a href="#stream" style="font-size:20px;color:white">Stream</a>'
+                         + '<a href="#socials" style="font-size:20px;color:white">Socials</a>'
+                         + '<a href="/leaderboard/rainbet" style="font-size:20px;color:#ffd966">Leaderboard</a>';
+        document.body.appendChild(sheet);
+        document.getElementById('closeSheet').addEventListener('click', ()=> sheet.remove());
+      });
+
+      // copy referral
+      window.copyReferral = function(){
+        navigator.clipboard?.writeText('https://rainbet.com/?r=HOMEY').then(()=>{
+          const b = document.createElement('div'); b.textContent='Referral copied!';
+          Object.assign(b.style,{position:'fixed',right:'18px',bottom:'18px',padding:'10px 14px',background:'rgba(0,0,0,0.6)',borderRadius:'8px'});
+          document.body.appendChild(b);
+          setTimeout(()=>b.remove(),1600);
         });
+      };
 
-        // Smooth scroll for navigation
-        document.querySelectorAll('a[href*="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                const href = this.getAttribute('href');
-                // If we're not on the home page and trying to access a section
-                if (href.startsWith('/#') && window.location.pathname !== '/') {
-                    // Don't prevent default - let the browser navigate to home page
-                    return;
-                }
-
-                e.preventDefault();
-                const targetId = href.split('#')[1];
-                const target = document.querySelector('#' + targetId);
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
+      // small parallax for float icons
+      const floats = document.querySelectorAll('.float-icons img');
+      document.addEventListener('mousemove', e=>{
+        const cx = e.clientX; const cy = e.clientY;
+        floats.forEach((img,i)=>{
+          const speed = (i+1)*0.02;
+          const x = (cx - window.innerWidth/2)*speed;
+          const y = (cy - window.innerHeight/2)*speed;
+          img.style.transform = `translate(${x}px, ${y}px) rotate(${(x+y)%12}deg)`;
         });
+      });
 
-        // Add scroll effect to header
-        const header = document.querySelector('.header');
-        let lastScroll = 0;
+    })();
+  </script>
 
-        window.addEventListener('scroll', () => {
-            const currentScroll = window.pageYOffset;
-
-            if (currentScroll <= 0) {
-                header.classList.remove('scroll-up');
-                return;
-            }
-
-            if (currentScroll > lastScroll && !header.classList.contains('scroll-down')) {
-                header.classList.remove('scroll-up');
-                header.classList.add('scroll-down');
-            } else if (currentScroll < lastScroll && header.classList.contains('scroll-down')) {
-                header.classList.remove('scroll-down');
-                header.classList.add('scroll-up');
-            }
-            lastScroll = currentScroll;
-        });
-    </script>
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"94d25d670e66d758","version":"2025.5.0","r":1,"token":"332769ee6b8a4d008785502ac76bb2b2","serverTiming":{"name":{"cfExtPri":true,"cfEdge":true,"cfOrigin":true,"cfL4":true,"cfSpeedBrain":true,"cfCacheStatus":true}}}' crossorigin="anonymous"></script>
 </body>
-
 </html>
